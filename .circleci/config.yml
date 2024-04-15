@@ -1,0 +1,33 @@
+version: 2.1
+# Orbs - Reusable packages for use.
+orbs:
+  node: circleci/node@5.0.1
+  docker: circleci/docker@2.1.4
+# Jobs - Set of instructions / Functions.
+jobs:
+  build: # Job name.
+    docker: # Environment.
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages: pkg-manager:npm
+      - run: |
+          echo "Installing dependancies..."
+          npm install
+  test:
+    docker: # Environment.
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages: pkg-manager:npm
+      - run: |
+          echo "Running tests..."
+          npm run test
+# Workflow - Defines what sequence will the jobs run.
+workflows:
+  simple_workflow: # Workflow name.
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

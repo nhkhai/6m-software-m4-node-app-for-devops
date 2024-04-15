@@ -10,9 +10,10 @@ jobs:
       - image: cimg/node:16.10
     steps:
       - checkout
-      - node/install-packages: pkg-manager:npm
+      - node/install-packages: |
+          pkg-manager:npm
       - run: |
-          echo "Installing dependancies..."
+          echo "Installing dependencies..."
           npm install
   test:
     docker: # Environment.

@@ -32,9 +32,9 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: nhkhai/education-space
+          image: nhkhai/education-space:latest
       - docker/push:
-          image: nhkhai/education-space
+          image: nhkhai/education-space:latest
 # Workflow - Defines what sequence will the jobs run.
 workflows:
   simple_workflow: # Workflow name.

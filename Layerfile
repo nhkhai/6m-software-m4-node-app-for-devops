@@ -20,5 +20,5 @@ COPY . .
 # RUN docker build -t image .
 # RUN docker run -d -p 3000:3000 image
 RUN docker pull nhkhai/education-space:latest
-RUN docker run nhkhai/education-space:latest
+RUN docker run -d -p 3000:3000 nhkhai/education-space:latest
 EXPOSE WEBSITE http://localhost:3000

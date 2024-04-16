@@ -25,6 +25,16 @@ jobs:
       - run: |
           echo "Running tests..."
           npm run test
+  publish:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: nhkhai/education-space
+      - docker/push:
+          image: nhkhai/education-space
 # Workflow - Defines what sequence will the jobs run.
 workflows:
   simple_workflow: # Workflow name.
@@ -33,3 +43,6 @@ workflows:
       - test:
           requires:
             - build
+      - publish:
+          requires:
+            - test

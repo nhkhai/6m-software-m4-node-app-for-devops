@@ -35,10 +35,12 @@ jobs:
       - docker/build: # Build the image.
           image: nhkhai/education-space
           # Mini Activity #3 - Add a tag called v1.0.1 and push the tag in docker hub.
-          tag: v1.0.1
+          # tag: v1.0.1
+          tag: latest
       - docker/push: # Pushes the image to the specified account in the environment variables.
           image: nhkhai/education-space
-          tag: v1.0.1
+          # tag: v1.0.1
+          tag: latest
   # deploy:
   #   docker:
   #       - image: cimg/node:16.10

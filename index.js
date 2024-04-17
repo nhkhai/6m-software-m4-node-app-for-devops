@@ -17,9 +17,14 @@ app.get("/home", (req, res) => {
 });
 
 // POST /user: gets a user object (name, email, password) and prints the name and email.
-app.get("/user", (req, res) => {
+app.post("/user", (req, res) => {
   const { name, email, password } = req.body;
-  res.send(`Name: ${name}, Email: ${email}, Password: ${password}`);
+
+  if (!name || !email || !password) {
+    return res.status(400).send("Missing fields");
+  }
+
+  res.status(200).send(`Name: ${name}, Email: ${email}, Password: ${password}`);
 });
 
 app.listen(process.env.PORT, () => {

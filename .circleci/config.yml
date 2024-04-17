@@ -33,10 +33,11 @@ jobs:
       - docker/check
       - docker/build: # Build the image.
           image: nhkhai/education-space
-          tag: latest
+          # Mini Activity #3 - Add a tag called v1.0.1 and push the tag in docker hub.
+          tag: v1.0.1
       - docker/push: # Pushes the image to the specified account in the environment variables.
           image: nhkhai/education-space
-          tag: latest
+          tag: v1.0.1
 # Workflow - Defines what sequence will the jobs run.
 workflows:
   simple_workflow: # Workflow name.
@@ -45,7 +46,7 @@ workflows:
       - test:
           requires:
             - build
-      # Mini activity #2 - How to make the publish job execute after the test job?
+      # Mini Activity #2 - How to make the publish job execute after the test job?
       - publish:
           requires:
             - test

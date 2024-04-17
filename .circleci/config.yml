@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
+  # heroku: circleci/heroku@2.0.0
 # Jobs - Set of instructions / Functions.
 jobs:
   build: # Job name.
@@ -38,6 +39,30 @@ jobs:
       - docker/push: # Pushes the image to the specified account in the environment variables.
           image: nhkhai/education-space
           tag: v1.0.1
+  # deploy:
+  #   docker:
+  #       - image: cimg/node:16.10
+  #   steps:
+  #       - setup_remote_docker
+  #       - heroku/install
+  #       - checkout
+  #       - run:
+  #           name: Heroku Container Push
+  #           command: |
+  #               heroku container:login
+  #               heroku container:push web -a nhkhai-node-app-for-devops
+  #               heroku container:release web -a nhkhai-node-app-for-devops
+  deploy:
+    docker:
+      # - image: cimg/deploy:2024.03
+      - image: cimg/base:current-22.04
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: Render Deploy Hook
+          command: |
+            curl "$RENDER_DEPLOY_HOOK_URL"
 # Workflow - Defines what sequence will the jobs run.
 workflows:
   simple_workflow: # Workflow name.
@@ -50,3 +75,6 @@ workflows:
       - publish:
           requires:
             - test
+      - deploy:
+          requires:
+            - publish

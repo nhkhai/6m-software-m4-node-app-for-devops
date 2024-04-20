@@ -80,16 +80,16 @@ workflows:
             - build
       # Mini Activity #2 - How to make the publish job execute after the test job?
       - publish:
-          filters:
-            branches:
-              only:
-                - release
           requires:
             - test
-      - deploy:
           filters:
             branches:
               only:
                 - release
+      - deploy:
           requires:
             - publish
+          filters:
+            branches:
+              only:
+                - release

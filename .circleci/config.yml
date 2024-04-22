@@ -42,6 +42,7 @@ jobs:
       - run: docker build -t $IMAGE_NAME . # $IMAGE_NAME gets the value from the environment we created above.
       - snyk/scan: # This triggers the Snyk scan using the preconfigured SNYK_TOKEN environmental variable.
           docker-image-name: $IMAGE_NAME
+          severity-threshold: high
 
   publish: # Also known as the build-and-push.
     executor: docker/docker # Define the execution environment in which the steps of a job will run.

@@ -93,20 +93,20 @@ workflows:
       - build
         # filters:
         #   branches:
-        #     only: main
+        #     only: main # The build job would only run when the code changes are pushed to the main branch.
       - test:
           requires:
             - build
           # filters:
           #   branches:
           #     only: main
-      # The scan job
+      # The scan job.
       - scan:
           requires:
             - build
-          filters:
-            branches:
-              only: main
+          # filters:
+          #   branches:
+          #     only: main
       # Mini Activity #2 - How to make the publish job execute after the test job?
       - publish:
           requires:

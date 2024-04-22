@@ -4,6 +4,7 @@ orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
   # heroku: circleci/heroku@2.0.0
+  snyk: snyk/snyk@2.1.0
 
 # Jobs - Set of instructions / Functions.
 jobs:
@@ -28,6 +29,19 @@ jobs:
       - run: |
           echo "Running tests..."
           npm run test
+
+  scan:
+    docker:
+      - image: cimg/node:16.10
+    environment: # The environment allows us to create an environment for the job and allows us to create custom environment variables.
+      IMAGE_NAME: nhkhai/education-space
+    steps:
+      - checkout
+      - setup_remote_docker
+      - docker/check
+      - run: docker build -t $IMAGE_NAME . # $IMAGE_NAME gets the value from the environment we created above.
+      - snyk/scan:
+          docker-image-name: $IMAGE_NAME
 
   publish: # Also known as the build-and-push.
     executor: docker/docker # Define the execution environment in which the steps of a job will run.
@@ -77,9 +91,22 @@ workflows:
   simple_workflow: # Workflow name.
     jobs:
       - build
+        # filters:
+        #   branches:
+        #     only: main
       - test:
           requires:
             - build
+          # filters:
+          #   branches:
+          #     only: main
+      # The scan job
+      - scan:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
       # Mini Activity #2 - How to make the publish job execute after the test job?
       - publish:
           requires:

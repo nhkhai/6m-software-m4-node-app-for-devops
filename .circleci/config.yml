@@ -40,7 +40,7 @@ jobs:
       - setup_remote_docker
       - docker/check
       - run: docker build -t $IMAGE_NAME . # $IMAGE_NAME gets the value from the environment we created above.
-      - snyk/scan:
+      - snyk/scan: # This triggers the Snyk scan using the preconfigured SNYK_TOKEN environmental variable.
           docker-image-name: $IMAGE_NAME
 
   publish: # Also known as the build-and-push.

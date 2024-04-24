@@ -1,4 +1,5 @@
 version: 2.1
+
 # Orbs - Reusable packages for use.
 orbs:
   node: circleci/node@5.2.0
@@ -100,6 +101,7 @@ workflows:
       #           - main
       #         ignore:
       #           - release
+
       - test:
           requires:
             - build
@@ -109,6 +111,7 @@ workflows:
           #       - main
           #     ignore:
           #       - release
+
       # The scan job.
       - scan:
           requires:
@@ -119,6 +122,7 @@ workflows:
           #       - main
           #     ignore:
           #       - release
+
       # Mini Activity #2 - How to make the publish job execute after the test job?
       - publish:
           requires:
@@ -129,6 +133,7 @@ workflows:
             branches:
               only:
                 - release
+
       - deploy:
           requires:
             - publish

@@ -11,7 +11,8 @@ orbs:
 jobs:
   build: # Job name.
     docker: # Environment.
-      - image: cimg/node:20.12.2
+      # - image: cimg/node:20.12.2
+      - image: cimg/node:current
 
     steps:
       - checkout
@@ -23,7 +24,8 @@ jobs:
 
   test:
     docker: # Environment.
-      - image: cimg/node:20.12.2
+      # - image: cimg/node:20.12.2
+      - image: cimg/node:current
 
     steps:
       - checkout
@@ -35,7 +37,9 @@ jobs:
 
   scan:
     docker:
-      - image: cimg/node:20.12.2
+      # - image: cimg/node:20.12.2
+      # - image: cimg/node:current
+      - image: cimg/base:current
 
     environment: # The environment allows us to create an environment for the job and allows us to create custom environment variables.
       IMAGE_NAME: nhkhai/education-space
@@ -86,7 +90,9 @@ jobs:
   deploy:
     docker:
       # - image: cimg/deploy:2024.03
-      - image: cimg/base:current-22.04
+      # - image: cimg/deploy:2024.03-node
+      # - image: cimg/base:current-22.04
+      - image: cimg/base:current
 
     steps:
       - setup_remote_docker

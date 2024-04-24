@@ -12,6 +12,7 @@ jobs:
   build: # Job name.
     docker: # Environment.
       - image: cimg/node:20.12.2
+
     steps:
       - checkout
       - node/install-packages:
@@ -23,6 +24,7 @@ jobs:
   test:
     docker: # Environment.
       - image: cimg/node:20.12.2
+
     steps:
       - checkout
       - node/install-packages:
@@ -34,8 +36,10 @@ jobs:
   scan:
     docker:
       - image: cimg/node:20.12.2
+
     environment: # The environment allows us to create an environment for the job and allows us to create custom environment variables.
       IMAGE_NAME: nhkhai/education-space
+
     steps:
       - checkout
       - setup_remote_docker
@@ -48,6 +52,7 @@ jobs:
 
   publish: # Also known as the build-and-push.
     executor: docker/docker # Define the execution environment in which the steps of a job will run.
+
     steps:
       - setup_remote_docker
       - checkout
@@ -67,6 +72,7 @@ jobs:
   # deploy:
   #   docker:
   #       - image: cimg/node:20.12.2
+  #
   #   steps:
   #       - setup_remote_docker
   #       - heroku/install
@@ -81,6 +87,7 @@ jobs:
     docker:
       # - image: cimg/deploy:2024.03
       - image: cimg/base:current-22.04
+
     steps:
       - setup_remote_docker
       - checkout

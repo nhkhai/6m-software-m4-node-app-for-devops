@@ -1,8 +1,8 @@
 version: 2.1
 # Orbs - Reusable packages for use.
 orbs:
-  node: circleci/node@5.0.1
-  docker: circleci/docker@2.1.4
+  node: circleci/node@5.2.0
+  docker: circleci/docker@2.6.0
   # heroku: circleci/heroku@2.0.0
   snyk: snyk/snyk@2.1.0
 
@@ -10,7 +10,7 @@ orbs:
 jobs:
   build: # Job name.
     docker: # Environment.
-      - image: cimg/node:16.10
+      - image: cimg/node:20.12.2
     steps:
       - checkout
       - node/install-packages:
@@ -21,7 +21,7 @@ jobs:
 
   test:
     docker: # Environment.
-      - image: cimg/node:16.10
+      - image: cimg/node:20.12.2
     steps:
       - checkout
       - node/install-packages:
@@ -32,7 +32,7 @@ jobs:
 
   scan:
     docker:
-      - image: cimg/node:16.10
+      - image: cimg/node:20.12.2
     environment: # The environment allows us to create an environment for the job and allows us to create custom environment variables.
       IMAGE_NAME: nhkhai/education-space
     steps:
@@ -65,7 +65,7 @@ jobs:
 
   # deploy:
   #   docker:
-  #       - image: cimg/node:16.10
+  #       - image: cimg/node:20.12.2
   #   steps:
   #       - setup_remote_docker
   #       - heroku/install

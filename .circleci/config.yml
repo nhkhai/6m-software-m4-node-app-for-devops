@@ -50,9 +50,9 @@ jobs:
       - docker/check
       - run: docker build -t $IMAGE_NAME . # $IMAGE_NAME gets the value from the environment we created above.
       - snyk/scan: # This triggers the Snyk scan using the preconfigured SNYK_TOKEN environmental variable.
-          docker-image-name: $IMAGE_NAME
-          fail-on-issues: false
-          severity-threshold: high
+          docker-image-name: $IMAGE_NAME # The image name, if scanning a container image.
+          fail-on-issues: false # This specifies if builds should be failed or continued based on issues found by Snyk. If false, the failure is hidden and marked as a pass.
+          severity-threshold: high # Only report vulnerabilities of provided level or higher (low/medium/high/critical). If param is not present, the default value is low.
 
   publish: # Also known as the build-and-push.
     executor: docker/docker # Define the execution environment in which the steps of a job will run.
@@ -125,7 +125,7 @@ workflows:
           #     ignore:
           #       - release
 
-      # The scan job.
+      # The Snyk security scan job.
       - scan:
           requires:
             - build
@@ -138,8 +138,10 @@ workflows:
 
       # Mini Activity #2 - How to make the publish job execute after the test job?
       - publish:
+          # Ensure that the dependency job(s) are able to run (watch out for branch filtering affecting this), else publish and deploy (depends on publish) will not run at all.
           requires:
             - test
+            - scan
           filters:
             # tags:
             #   only: /^v[0-9]+\.[0-9]+\.[0-9]+$/ # Ensure this job runs only for semantically versioned tags. This regex pattern matches semantic versioning tags (e.g., v1.0.0, v2.1.3).

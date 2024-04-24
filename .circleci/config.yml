@@ -58,8 +58,8 @@ jobs:
     executor: docker/docker # Define the execution environment in which the steps of a job will run.
 
     steps:
-      - setup_remote_docker
       - checkout
+      - setup_remote_docker
       - docker/check
       - docker/build: # Build the image.
           image: nhkhai/education-space
@@ -78,9 +78,9 @@ jobs:
   #       - image: cimg/node:20.12.2
   #
   #   steps:
+  #       - checkout
   #       - setup_remote_docker
   #       - heroku/install
-  #       - checkout
   #       - run:
   #           name: Heroku Container Push
   #           command: |
@@ -95,8 +95,8 @@ jobs:
       - image: cimg/base:current
 
     steps:
-      - setup_remote_docker
-      - checkout
+      # - checkout
+      # - setup_remote_docker
       - run:
           name: Render Deploy Hook
           command: |
